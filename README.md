@@ -11,3 +11,5 @@ You'll find two (essential) plots. The first one in Image_Recognition_MNIST.py, 
 
 # Feedbacks
 I'm more than open to feedbacks ! If you have any suggestions that could improve the accuracy, or the time taken to execute please share them ! If you have any questions simply ask and I'll be glad to answer you. I tried to make a very General program in order to be able to use other datas and not only the MNIST data-base as I did for my inital University project.
+
+You can join my discord server and send all of this in the Computer Science project : https://discord.gg/9WrkhGzy6P
