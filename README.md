@@ -6,7 +6,7 @@ The first file PictureRecognition.py is the main program. It contains all the cl
 
 The two other files are using the MNIST data-base, stored in CSV files. Accuracy.py uses Image_Recognition_MNIST.py in order to calculate the accuracy for a set of datas, but it is also independent from the used Data Base. Finally, Image_Recognition_MNIST.py is there in order to open the necessary files containing the MNIST set. 
 
-# PLoting the datas 
+# Ploting the datas 
 You'll find two (essential) plots. The first one in Image_Recognition_MNIST.py, used to show the charts created for every label. The second one is in Accuracy.py. But be careful with this one : ploting the accuracy depending on the size of the batch AND the precision required by the user might take a while depending on your system. I suggest you first plot it for one value of K (batch size), and some values of delta (threshold). If you feel confident, you can try ploting them all togethern, and I'd be pleased to see how it looks like, because I couldn't plot the complete figure with all of the subplots.
 
 # Feedbacks
