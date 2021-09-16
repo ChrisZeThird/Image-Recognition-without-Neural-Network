@@ -16,7 +16,7 @@ containing the labels of the training for the creation of the model is stored in
     - The pictures are stored in a list as arrays, so you might want to reshape them properly
 
 Some simplifications helped me write this code, in order to be more efficient and focus on more important things. But nothing is eternal so feel
-to make some changes on your own and post a feedback. 
+free to make some changes on your own and post a feedback. 
 """
 
 class Recognition():
@@ -41,7 +41,7 @@ class Recognition():
         
         """Input : x -> list of arrays, contains the pictures
                    p -> integer, by default, the pictures is coded with 255 possible pixel values
-           Output : numpy array of arrays, contains normalized pictures with pixel value of {1,-1}"""
+           Output : numpy array of arrays, contains normalized pictures with pixel value of {1,-1} OR {1,0}, feel free to compare those two methods"""
         
         n = len(x)
         x = [(1/self.p)*i for i in x] #first normalization
