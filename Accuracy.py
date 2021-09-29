@@ -12,11 +12,11 @@ Created on Tue Sep 14 15:25:24 2021
    The goal is to plot thanks to matplotlib, the evolution of the accuracy depending on K and delta, in order to maximise it."""
    
    
-
+import numpy as np
 import matplotlib.pyplot as plt
-import PictureRecognition as pr
+import PictureRecognition_Numpy_Improved as pr
 import Image_Recognition_MNIST as irm
-
+import time
 
 """Accuracy calculation"""
 
@@ -26,71 +26,53 @@ def accuracy(x,y,K,delta):
                 K : integer, gives the size of the batch studied
                 delta : flot, precision given by the user, with delta in [0,1]
        Output -> float, gives the accuracy of the programm"""
-       
+    res0 = np.array([])   
     R = pr.Recognition(x, y, 28, 28, K, delta)   
-    result = [0]*K
-    
     for k in range(K):
-        p = R.prediction(x[k])
-        if p == y[k,0]:
-            result[k] = 1
+        res0 = np.append(res0,R.prediction(x[k]))
+        
+    res = np.reshape(res0,(K,1))
     
-    return sum(result)/K
-       
+    c = np.sum(res==y[:K,])
+    
+    return np.average(c)
 """Variable call"""
 
 x = irm.x
 y = irm.y
 
-"""PLotting of the different accuracy"""
+"""PLotting of the different accuracy for various batch and threshold values"""
 
-delta_list = [0.70, 0.80, 0.90] #list of different threshold values
-K_list = [100, 200, 500, 1000] #list of different size of batches
+K_array = np.linspace(start=100,stop=1000,num=5, dtype=int) #Array of different sizes of batches
+Delta = np.linspace(start=0,stop=1,num=5,endpoint=False, dtype=float) #Array of different threshold values
 
-acc_list100 = []
-acc_list200 = []
-acc_list500 = []
-acc_list1000 = []
+acc_per_batch = np.array([])
+Time = []
 
-K0 = 100
-K1 = 200
-K2 = 500
-K3 = 1000
-
-for n in range(3):
+for a in np.nditer(K_array):
+    acc_per_thres = np.array([])   
+    ping = time.time()
+    for b in np.nditer(Delta):
+        acc = accuracy(x, y, a, b)
+        acc_per_thres = np.append(acc_per_thres,acc)
     
-    delta0 = delta_list[n]
-    a0 = accuracy(x, y, K0, delta0)
-    a1 = accuracy(x, y, K1, delta0)
-    a2 = accuracy(x, y, K2, delta0)
-    a3 = accuracy(x, y, K3, delta0)
-    acc_list100.append(a0)
-    acc_list200.append(a1)
-    acc_list500.append(a2)
-    acc_list1000.append(a3)
+    acc_per_batch = np.append(acc_per_batch,acc_per_thres)    
+    pong = time.time()
+    Time.append(pong-ping)
+    
+# n = K_array.size()
+# fig, axs = plt.subplots(n, figsize=(16,9))    
+# fig.suptitle('Accuracy for different batch values', fontsize=16)
 
-#setting plot
-fig = plt.figure(figsize=(16,9))
-ax1 = fig.add_subplot(2, 2, 1)
-ax2 = fig.add_subplot(2, 2, 2)
-ax3 = fig.add_subplot(2, 2, 3)
-ax4 = fig.add_subplot(2, 2, 4)
+# for k in range(n):
+#     a = axs[k]
+#     a.plot(Delta,res0[k])
+#     a.title.set_text("Batch of" + str(axs[k]) + "pictures")
+#     a.suptitle.set_text("Realized in " + str(T[k]) + " seconds")
+#     a.set_xlabel("Threshold")
+#     a.set_ylabel("Accuracy")
 
-ax1.set_ylabel('Accuracy', fontsize=9)
-ax1.set_xlabel('Threshold', labelpad = 9)
-ax1.bar(delta_list,acc_list1000)
+# plt.show()   
+    
 
-ax2.set_ylabel('Accuracy', fontsize=9)
-ax2.set_xlabel('Threshold', labelpad = 9)
-ax2.plot(delta_list,acc_list200)
-
-ax3.set_ylabel('Accuracy', fontsize=9)
-ax3.set_xlabel('Threshold', labelpad = 9)
-ax3.plot(delta_list,acc_list500)
-
-ax4.set_ylabel('Accuracy', fontsize=9)
-ax4.set_xlabel('Threshold', labelpad = 9)
-ax4.plot(delta_list,acc_list1000)
-
-plt.show()
 
